@@ -37,13 +37,23 @@ const handleRequest = function(req, res) {
   }
 
   // TODO: GET ONE
-  if ((req.url == '/quote/' || req.url == '/quote') && req.method == "FILL ME IN") {
+  if ((req.url == '/quote/' || req.url == '/quote') && req.method == "GET") {
     //YOUR CODE HERE
+    res.writeHead(200, {...headers});
+    res.write(JSON.stringify(quotes[getRandomInt(0, quotes.length - 1)]));
+    res.end();
 
   }
   // TODO: POST/CREATE
-  else if ((req.url == 'FILL ME IN' || req.url == 'FILL ME IN') && req.method == "FILL ME IN") {
-    //YOUR CODE HERE
+  else if ((req.url == '/addQuote' || req.url == '/addQuote/') && req.method == "POST") {
+    let body = '';
+    req.on('data', (chunk) => {
+      body += chunk;
+      quotes.push(body);
+    })
+
+    res.writeHead(200, {...headers});
+    res.end(body);
   }
 
 //CATCH ALL ROUTE
